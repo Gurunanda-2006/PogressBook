@@ -1,0 +1,5 @@
+/* App.css — minimal global styles beyond the design system */
+
+#root {
+  min-height: 100dvh;
+}

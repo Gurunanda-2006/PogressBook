@@ -1,0 +1,143 @@
+.finance-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-4) var(--space-2);
+  background: var(--bg-card);
+}
+
+.summary-card .label {
+  margin-bottom: var(--space-2);
+}
+
+.summary-card .stat-number {
+  font-size: 1rem;
+}
+
+.summary-card__income {
+  color: var(--success);
+}
+
+.summary-card__expense {
+  color: var(--danger);
+}
+
+.summary-card__balance-pos {
+  color: var(--accent);
+}
+
+.summary-card__balance-neg {
+  color: var(--danger);
+}
+
+.finance-form {
+  padding: var(--space-4);
+  background: var(--bg-card);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.finance-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.finance-type-filter {
+  margin-bottom: var(--space-4);
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.transaction-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.transaction-category {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.transaction-date {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.transaction-notes {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.transaction-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  position: relative;
+}
+
+.transaction-badges {
+  display: flex;
+  gap: 4px;
+}
+
+.transaction-amount {
+  font-size: 1rem;
+}
+
+.transaction-delete {
+  position: absolute;
+  right: -32px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  padding: 0 var(--space-2);
+  font-size: 1.25rem;
+  transition: opacity var(--transition-fast);
+}
+
+.transaction-row:hover .transaction-delete {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .summary-card .stat-number {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  /* On mobile, bring delete button inside */
+  .transaction-delete {
+    position: static;
+    transform: none;
+    opacity: 1;
+    margin-top: var(--space-2);
+  }
+}

@@ -1,0 +1,124 @@
+.timer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-4) 0;
+  text-align: center;
+}
+
+.timer-input {
+  width: 100%;
+  max-width: 320px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  padding: var(--space-3) 0;
+  font-size: 1.125rem;
+  text-align: center;
+}
+
+.timer-input:focus {
+  border-bottom-color: var(--text-primary);
+}
+
+.timer-input:disabled {
+  border-bottom-color: transparent;
+  color: var(--text-primary);
+  font-weight: 600;
+  opacity: 1;
+}
+
+.timer-notes {
+  max-width: 420px;
+  font-size: 0.9375rem;
+}
+
+.timer-display {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  transition: color var(--transition-normal);
+}
+
+.timer-btn {
+  width: 160px;
+}
+
+.history-total {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.history-total .stat-number {
+  font-size: 1.5rem;
+}
+
+.session-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.session-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4);
+}
+
+.session-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.session-name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.session-time {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.session-notes {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  max-width: 36ch;
+  overflow-wrap: anywhere;
+}
+
+.session-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.session-duration {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.session-delete {
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0 var(--space-2);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.session-card:hover .session-delete {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .session-delete {
+    opacity: 1;
+  }
+}
