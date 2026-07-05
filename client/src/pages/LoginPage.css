@@ -1,23 +1,53 @@
 .login-page {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100dvh;
-  background-color: var(--bg-primary);
+  overflow: hidden;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, rgba(26, 26, 26, 0.08) 0 1px, transparent 1px 5px),
+    linear-gradient(115deg, transparent 0 44%, rgba(26, 26, 26, 0.05) 44% 56%, transparent 56%),
+    var(--bg-primary);
   padding: var(--space-5);
 }
 
+.login-page__backtype {
+  position: absolute;
+  inset: auto auto 6% 50%;
+  transform: translateX(-50%);
+  color: rgba(26, 26, 26, 0.07);
+  font-family: Impact, Haettenschweiler, "Arial Black", var(--font-sans);
+  font-size: clamp(5rem, 22vw, 18rem);
+  font-weight: 900;
+  line-height: 0.8;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .login-container {
+  position: relative;
+  z-index: 1;
   max-width: 400px;
   width: 100%;
   text-align: center;
   animation: fadeInUp 0.6s ease forwards;
 }
 
+.login-back {
+  display: inline-flex;
+  margin-bottom: var(--space-5);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+}
+
 .login-title {
-  font-size: 1.75rem;
-  font-weight: 800;
-  letter-spacing: 0.2em;
+  font-family: Impact, Haettenschweiler, "Arial Black", var(--font-sans);
+  font-size: clamp(3rem, 11vw, 5.4rem);
+  font-weight: 900;
+  line-height: 0.86;
+  letter-spacing: 0;
   margin: var(--space-6) 0 var(--space-2);
   color: var(--text-primary);
 }

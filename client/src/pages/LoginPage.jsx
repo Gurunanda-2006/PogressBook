@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import './LoginPage.css';
 
 export default function LoginPage() {
@@ -30,9 +30,11 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
+      <div className="login-page__backtype" aria-hidden="true">SIGN IN</div>
       <div className="login-container">
+        <Link to="/" className="login-back">PROGRESSBOOK</Link>
         <hr className="divider login-divider" />
-        <h1 className="login-title">PROGRESSBOOK</h1>
+        <h1 className="login-title">ENTER YOUR TRACKER</h1>
         <p className="login-tagline">Track your day. Own your progress.</p>
         <hr className="divider login-divider" />
         

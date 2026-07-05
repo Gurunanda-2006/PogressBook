@@ -37,7 +37,12 @@ export default function Layout() {
   return (
     <div className="layout">
       <header className="layout__header">
-        <div className="layout__brand">PROGRESSBOOK</div>
+        <div className="layout__brand">
+          <span className="layout__brand-mark">
+            <img src="/brand-logo.png" alt="" />
+          </span>
+          <span>PROGRESSBOOK</span>
+        </div>
         <div className="layout__user">
           <span className="layout__name">{user?.name || user?.email}</span>
           <button
