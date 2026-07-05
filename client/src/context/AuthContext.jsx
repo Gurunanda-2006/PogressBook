@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
       console.error('Logout error:', err);
     } finally {
       // Clear user state even if the API call fails
+      localStorage.removeItem('activeTimer');
       setUser(null);
     }
   };

@@ -16,19 +16,41 @@ export default function WorkTrackingPage() {
   const [error, setError] = useState('');
   const timerRef = useRef(null);
 
-  useEffect(() => {
-    const saved = localStorage.getItem('activeTimer');
-    if (!saved) return;
-
-    try {
-      const parsed = JSON.parse(saved);
-      setTaskName(parsed.taskName || '');
-      setNotes(parsed.notes || '');
-      setActiveSession(parsed);
-    } catch {
+  const saveActiveSession = (session) => {
+    if (!session) {
       localStorage.removeItem('activeTimer');
+      setActiveSession(null);
+      return;
     }
-  }, []);
+
+    const sessionData = {
+      sessionId: session.SessionID,
+      startTime: session.StartTime,
+      taskName: session.TaskName,
+      notes: session.Notes || '',
+    };
+
+    localStorage.setItem('activeTimer', JSON.stringify(sessionData));
+    setTaskName(sessionData.taskName);
+    setNotes(sessionData.notes);
+    setActiveSession(sessionData);
+  };
+
+  const syncActiveSession = async () => {
+    const { data, error: syncError } = await api.get('/api/sessions/active');
+
+    if (syncError) {
+      setError(syncError);
+      return;
+    }
+
+    if (data) {
+      saveActiveSession(data);
+      return;
+    }
+
+    saveActiveSession(null);
+  };
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -36,6 +58,7 @@ export default function WorkTrackingPage() {
       if (data?.TaskPresets) setTaskPresets(data.TaskPresets);
     };
     fetchSettings();
+    syncActiveSession();
   }, []);
 
   useEffect(() => {
@@ -84,14 +107,7 @@ export default function WorkTrackingPage() {
     });
 
     if (data && !startError) {
-      const sessionData = {
-        sessionId: data.SessionID,
-        startTime: data.StartTime,
-        taskName: data.TaskName,
-        notes: data.Notes || '',
-      };
-      localStorage.setItem('activeTimer', JSON.stringify(sessionData));
-      setActiveSession(sessionData);
+      saveActiveSession(data);
     }
 
     if (startError) setError(startError);
@@ -103,14 +119,16 @@ export default function WorkTrackingPage() {
     setError('');
     const { data, error: stopError } = await api.post(`/api/sessions/${activeSession.sessionId}/stop`);
     if (data && !stopError) {
-      localStorage.removeItem('activeTimer');
-      setActiveSession(null);
+      saveActiveSession(null);
       setTaskName('');
       setNotes('');
       fetchSessions();
     }
 
-    if (stopError) setError(stopError);
+    if (stopError) {
+      setError(stopError);
+      syncActiveSession();
+    }
   };
 
   const handleDelete = async (id) => {

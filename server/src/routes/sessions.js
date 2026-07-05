@@ -5,6 +5,27 @@ import { generateId } from '../utils/id.js';
 
 const router = Router();
 
+function cleanSession(session) {
+  const { _rowIndex, ...rest } = session;
+  return rest;
+}
+
+router.get('/active', async (req, res) => {
+  try {
+    const activeSessions = await findRows(TABS.WORK_SESSIONS, (row) => (
+      row.UserEmail === req.user.email && !row.EndTime
+    ));
+
+    const [latestSession] = activeSessions
+      .sort((a, b) => `${b.Date} ${b.StartTime}`.localeCompare(`${a.Date} ${a.StartTime}`));
+
+    res.json(latestSession ? cleanSession(latestSession) : null);
+  } catch (err) {
+    console.error('Get active session error:', err.message);
+    res.status(500).json({ error: 'Failed to fetch active session.' });
+  }
+});
+
 router.post('/start', async (req, res) => {
   try {
     const { taskName, notes = '', date } = req.body;
@@ -13,6 +34,16 @@ router.post('/start', async (req, res) => {
 
     if (!cleanTaskName) {
       return res.status(400).json({ error: 'Task name is required.' });
+    }
+
+    const existingActive = await findRows(TABS.WORK_SESSIONS, (row) => (
+      row.UserEmail === req.user.email && !row.EndTime
+    ));
+
+    if (existingActive.length > 0) {
+      return res.status(409).json({
+        error: 'You already have a timer running. Stop it before starting a new one.',
+      });
     }
 
     const sessionId = generateId('ses');
